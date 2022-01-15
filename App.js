@@ -24,6 +24,10 @@ const MapPage = () => (
   <MapView
     style={styles.map}
     provider={PROVIDER_GOOGLE}
+    userInterfaceStyle={"dark"}
+    showsUserLocation={true}
+    followsUserLocation={true}
+    showsMyLocationButton={true}
     >
 
   </MapView>
