@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Image } from 'react-native'; // Removed Button
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './Styles';
@@ -18,6 +17,7 @@ import {
   Barlow_700Bold,
   Barlow_700Bold_Italic,
 } from "@expo-google-fonts/barlow";
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
@@ -83,13 +83,41 @@ function sendLoc(loc) {
 } 
 
 
+class SettingsPage extends React.Component {
 
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.centerIt}>
+          <Text style={styles.currGroupText}> Current Group </Text>
+          <Image
+            style={styles.groupLogo}
+            source={require('./assets/icons8-group-128.png')}
+          />
+        </View>
+        <View style={styles.listBorder}>
+          <FlatList
+            data={[
+              { key: 'Kenneth Xing' },
+              { key: 'Stripey Xing' },
+              { key: 'Lukas Franz' },
+              { key: 'Wilson Rabbit' },
+            ]}
+            renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
+          />
+        </View>
 
-const SettingsPage = () => (
-  <View style={styles.container}>
-    <Text style={styles.normalText}> SettingsPage! </Text>
-  </View>
-);
+        <View style={styles.createGroup}>
+          <View
+            style={styles.line}
+          />
+          <Text style={styles.createGroupText}>Create a New Group</Text>
+        </View>
+
+      </SafeAreaView>
+    )
+  }
+}
 
 export const BotBar = () => (
 
@@ -144,5 +172,6 @@ export default function App() {
       </KeyboardAvoidingView>
     );
   }
-
 }
+
+
