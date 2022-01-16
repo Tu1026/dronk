@@ -16,6 +16,7 @@ var account = {
   token: null
 }
 
+
 function signUpAPI(username, password) {
   console.log(account.username)
   console.log(account.password)
@@ -34,8 +35,11 @@ function signUpAPI(username, password) {
   })
 };
 
+
 function signInAPI(username, password) {
-  fetch('http://159.89.120.69:8000/users/', { //TODO 
+  console.log(account.username)
+  console.log(account.password)
+  account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -46,7 +50,9 @@ function signInAPI(username, password) {
       password: account.password
     })
   })
+  console.log(account.token)
 };
+
 
 function sendLoc(loc) {
   console.log(loc);
@@ -63,12 +69,6 @@ function sendLoc(loc) {
   });
 } 
 
-function signIn() {
-  console.log("Usernames")
-  console.log(account.username)
-  console.log(account.password)
-  signInAPI(account.username, account.password)
-}
 
 const SignUpPage = () => {
   return (
@@ -76,29 +76,33 @@ const SignUpPage = () => {
     style={styles.container}>
     
     <View style={styles.logIn}>
-      <Text style={styles.logInText} fontSize={40}> First name: </Text>
+      {/* <Text style={styles.logInText} fontSize={40}> First name: </Text> */}
       <TextInput
-        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        style={styles.textInput}
         onChangeText={text => account.first_name=text}
+        placeholder='First Name'
         secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={50}> Last name: </Text>
+      {/* <Text style={styles.logInText} fontSize={50}> Last name: </Text> */}
       <TextInput
-        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        style={styles.textInput}
         onChangeText={text => account.last_name=text}
+        placeholder='Last Name'
         secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={50}> Username: </Text>
+      {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
       <TextInput
-        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        style={styles.textInput}
         onChangeText={text => account.username=text}
+        placeholder='Email'
         secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={50}> Password: </Text>
+      {/* <Text style={styles.logInText} fontSize={50}> Password: </Text> */}
       <TextInput
-        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        style={styles.textInput}
         onChangeText={text => account.password=text}
         secureTextEntry={true}
+        placeholder="Password"
         clearTextOnFocus = {true}
       />
       <Button
@@ -115,27 +119,28 @@ const SignInPage = () => {
   <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
   style={styles.container}>
     <View style={styles.logIn}>
-      <View>
-      <Text style={styles.logInText} fontSize={50}> Username: </Text>
+      
+      {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
       <TextInput
-          style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+          style={styles.textInput}
           onChangeText={text => account.username=text}
+          placeholder="Email"
           secureTextEntry={false}
         />
-      </View>
-      <View>
-      <Text style={styles.logInText} fontSize={50}> Password: </Text>
+      
+      {/* <Text style={styles.logInText} fontSize={50}> Password: </Text> */}
       <TextInput
-        style={{height: 50, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        style={styles.textInput}
         onChangeText={text => account.password=text}
+        placeholder="Password"
         secureTextEntry={true}
         clearTextOnFocus = {true}
       />
-      </View>
+      
       <Button
           title="Sign In"
-          onPress={() => signIn()}
-      />
+          onPress={() => signInAPI()}
+      /> 
     </View>
   </KeyboardAvoidingView>
   );
@@ -175,16 +180,14 @@ export const BotBar = () => (
         screenOptions={{
           tabBarStyle: {backgroundColor: '#121212'},
           tabBarShowLabel: false,
-          // tabBarBackground: () => (
-          //   <View style={styles.container}/>
-          // ),
           headerShown: false,
         }}
         >
         <Tab.Screen name="Data" component={DataPage}/> 
         <Tab.Screen name="Settings" component={SettingsPage}/> 
         <Tab.Screen name="Map" component={MapPage}/> 
-        <Tab.Screen name="Sign In" component={SignUpPage}/> 
+        <Tab.Screen name="Sign Up" component={SignUpPage}/> 
+        <Tab.Screen name="Sign In" component={SignInPage}/> 
       </Tab.Navigator>
     </View>  
   </NavigationContainer>
@@ -233,4 +236,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
   },
+  textInput: {
+    height: 50,
+    margin: 12,
+    width: "80%",
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#808080', 
+    borderColor: '#808080',
+    borderWidth: 10,
+    borderRadius: 30, 
+    fontSize: 25,
+  }
 });
