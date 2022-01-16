@@ -78,23 +78,23 @@ const SignUpPage = () => {
     <View style={styles.logIn}>
       <Text style={styles.logInText} fontSize={40}> First name: </Text>
       <TextInput
-          style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
-          onChangeText={text => account.first_name=text}
-          secureTextEntry={false}
+        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        onChangeText={text => account.first_name=text}
+        secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={40}> Last name: </Text>
+      <Text style={styles.logInText} fontSize={50}> Last name: </Text>
       <TextInput
-          style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
-          onChangeText={text => account.last_name=text}
-          secureTextEntry={false}
+        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        onChangeText={text => account.last_name=text}
+        secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={40}> Username: </Text>
+      <Text style={styles.logInText} fontSize={50}> Username: </Text>
       <TextInput
-          style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
-          onChangeText={text => account.username=text}
-          secureTextEntry={false}
+        style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
+        onChangeText={text => account.username=text}
+        secureTextEntry={false}
         />
-      <Text style={styles.logInText} fontSize={40}> Password: </Text>
+      <Text style={styles.logInText} fontSize={50}> Password: </Text>
       <TextInput
         style={{height: 40, width: "90%", padding: 0, backgroundColor: '#808080' }}
         onChangeText={text => account.password=text}
@@ -102,8 +102,8 @@ const SignUpPage = () => {
         clearTextOnFocus = {true}
       />
       <Button
-          title="Sign In"
-          onPress={() => signUpAPI()}
+        title="Sign In"
+        onPress={() => signUpAPI()}
       />
     </View>
   </KeyboardAvoidingView>
