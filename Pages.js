@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Image } from 'react-native'; // Removed Button
+import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './Styles';
@@ -19,11 +19,20 @@ import {
   Barlow_700Bold_Italic,
 } from "@expo-google-fonts/barlow";
 
+function checkSignIn() {
+  if (account.token != null) { //TODO
+    return (true)
+  } else {
+    return (false)
+  }
+}
+
 var account = {
   username: "",
   password: "",
   first_name: "",
   last_name: "",
+  location: "",
   token: null
 }
 
@@ -46,9 +55,10 @@ function signUpAPI(username, password) {
 };
 
 
-function signInAPI(username, password) {
+function signInAPI(navigation) {
   console.log(account.username)
   console.log(account.password)
+
   account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
     method: 'POST',
     headers: {
@@ -60,11 +70,20 @@ function signInAPI(username, password) {
       password: account.password
     })
   })
+  // account.token._U = "TODO"
   console.log(account.token)
-
-  
+  if (checkSignIn()) {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Signed In' }],
+      })
+  } else {
+    
+  }
 };
 
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 function sendLoc(loc) {
   console.log(loc);
@@ -95,7 +114,15 @@ export const Pages = {
                     </View>
                     <Text style={styles.keepingFunNights}>keeping fun nights  </Text>
                     <Text style={styles.worryFree} textAlign={'right'}> worry-free </Text>
-                    <Text style={styles.useBottomNav}>Use the bottom navigation bar to get started</Text>
+                    <Button
+                    title="Sign in"
+                    onPress={() => this.props.navigation.navigate('Sign In')}
+                    buttonStyle={styles.buttonCounter}/>
+                    <Button
+                    title="Sign Up"
+                    onPress={() => this.props.navigation.navigate('Sign Up')}
+                    buttonStyle={styles.buttonCounter}/> 
+                    {/* <Text style={styles.useBottomNav}>Use the bottom navigation bar to get started</Text> */}
                 </View>
             )
         }
@@ -174,7 +201,7 @@ export const Pages = {
               
               <Button
                   title="Sign In"
-                  onPress={() => signInAPI()}
+                  onPress={() => signInAPI(this.props.navigation)}
                   buttonStyle={styles.buttonCounter}
               /> 
             </View>
@@ -233,6 +260,90 @@ export const Pages = {
             </View>
           )
         }
-      }
+      },
+      
+      SettingsPage: class SettingsPage extends React.Component {
 
+        render() {
+          return (
+            <SafeAreaView style={styles.container}>
+              <View style={styles.centerIt}>
+                <Text style={styles.currGroupText}> Current Group </Text>
+                <Image
+                  style={styles.groupLogo}
+                  source={require('./assets/icons8-group-128.png')}
+                />
+              </View>
+              <View style={styles.listBorder}>
+                <FlatList
+                  data={[
+                    { key: 'Kenneth Xing' },
+                    { key: 'Stripey Xing' },
+                    { key: 'Lukas Franz' },
+                    { key: 'Wilson Rabbit' },
+                  ]}
+                  renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
+                />
+              </View>
+      
+              <View style={styles.createGroup}>
+                <View
+                  style={styles.line}
+                />
+                <Text style={styles.createGroupText}>Create a New Group</Text>
+              </View>
+      
+            </SafeAreaView>
+          )
+        }
+      },
 }
+
+export class Navigator extends React.Component {
+
+  state = {
+    signedIn: false
+  }
+
+  render() {
+  
+      return (
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Not Logged In" component = {Pages.HomePage}/>
+            <Stack.Screen name ="Sign Up" component={Pages.SignUpPage}/> 
+            <Stack.Screen name="Sign In" component={Pages.SignInPage}/> 
+            <Stack.Screen name="Signed In" component={BotBar} options={{headerShown: false}}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+        
+      )
+  }
+}
+
+class BotBar extends React.Component {
+
+  render() {
+      return (
+        <NavigationContainer independent={true}>
+          <View style={styles.container}>
+            <Tab.Navigator
+              tabBarShowLabel={false}
+              screenOptions={{
+
+                tabBarStyle: {backgroundColor: '#121212'},
+                tabBarShowLabel: false,
+                headerShown: false,
+              }}
+              >
+              <Tab.Screen name="Drink Counter" component={Pages.CounterPage} />
+              {/* <Tab.Screen name="Data" component={DataPage}/>  */}
+              <Tab.Screen name="My Groups" component={Pages.SettingsPage}/> 
+              <Tab.Screen name="Map" component={Pages.MapPage}/> 
+            </Tab.Navigator>
+          </View>
+        </NavigationContainer>
+      );
+  }
+}
+
