@@ -120,7 +120,7 @@ const signInAPI = async (navigation) => {
       })
       
     } else if (loginResponse.non_field_errors[0] === "Unable to log in with provided credentials.") {
-      
+      navigation.replace("Sign In Error")
     }
   }
 }
@@ -280,6 +280,43 @@ export const Pages = {
         }
       },
 
+      
+    SignInErrorPage: class SignInPage extends React.Component {
+      render() {
+        return ( 
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}>
+          <View style={styles.logIn}>
+            <Text style={{color: 'red'}}> Invalid Username or Password</Text>
+            {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
+            <TextInput
+                style={styles.textInput}
+                onChangeText={text => account.username=text}
+                placeholder="Email"
+                secureTextEntry={false}
+              />
+            
+            {/* <Text style={styles.logInText} fontSize={50}> Password: </Text> */}
+            <TextInput
+              style={styles.textInput}
+              onChangeText={text => account.password=text}
+              placeholder="Password"
+              secureTextEntry={true}
+              clearTextOnFocus = {true}
+            />
+            
+            <Button
+                title="Sign In"
+                onPress={() => signInAPI(this.props.navigation)}
+                buttonStyle={styles.buttonCounter}
+            /> 
+          </View>
+        </KeyboardAvoidingView>
+        );
+      }
+    },
+
+
     MapPage: class MapPage extends React.Component {
         render() {
           return (
@@ -383,6 +420,7 @@ export class Navigator extends React.Component {
             <Stack.Screen name="Not Logged In" component = {Pages.HomePage}/>
             <Stack.Screen name ="Sign Up" component={Pages.SignUpPage}/> 
             <Stack.Screen name="Sign In" component={Pages.SignInPage}/> 
+            <Stack.Screen name="Sign In Error" component={Pages.SignInErrorPage}/> 
             <Stack.Screen name="Signed In" component={BotBar} options={{headerShown: false}}/>
           </Stack.Navigator>
         </NavigationContainer>
