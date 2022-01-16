@@ -1,3 +1,4 @@
+from http.client import METHOD_NOT_ALLOWED
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import UserManager
@@ -11,7 +12,8 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False) # a admin user; non super-user
     admin = models.BooleanField(default=False) # a superuser
-    
+    first_name = models.CharField("first_name", "first_name", max_length=30, blank=False)
+    last_name = models.CharField("last_name", "last_name", max_length=20, blank=False)
     objects = UserManager()
     
     # notice the absence of a "Password field", that is built in.
@@ -49,3 +51,6 @@ class User(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
+    
+    def tokens(self):
+        return ''
