@@ -86,7 +86,7 @@ export const Pages = {
         };
       },
 
-      SignInPage: class SignInPage extends React.Component {
+    SignInPage: class SignInPage extends React.Component {
         render() {
           return ( 
           <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -121,7 +121,7 @@ export const Pages = {
         }
       },
 
-      MapPage: class MapPage extends React.Component {
+    MapPage: class MapPage extends React.Component {
         render() {
           return (
             <MapView
@@ -137,7 +137,7 @@ export const Pages = {
         }
       },
 
-      CounterPage: class CounterPage extends React.Component {
+    CounterPage: class CounterPage extends React.Component {
 
         state = {
           value: 0,
