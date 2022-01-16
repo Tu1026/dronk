@@ -347,7 +347,7 @@ export const Pages = {
           const dlng = coordinate.longitude - this.state.location.longitude
           console.log((dlat**2 + dlng**2)**0.5)
           if ((dlat**2 + dlng**2)**0.5 > 0.001 && this.state.active) {
-            this.state.active = false
+            
             Alert.alert(
               "Far From Buddy",
               "Don't forget to tell your friend where you are",
@@ -357,7 +357,7 @@ export const Pages = {
                   onPress: () => console.log("Cancel Pressed"),
                   style: "cancel"
                 },
-                { text: "OK", onPress: () => console.log("OK Pressed") }
+                { text: "OK", onPress: () => this.state.active = false }
               ]
            );
           }
