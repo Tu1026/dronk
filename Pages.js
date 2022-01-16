@@ -46,7 +46,7 @@ function signUpAPI(username, password) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: account.username,
+      username: account.username,
       first_name: account.first_name,
       last_name: account.last_name,
       password: account.password
@@ -54,51 +54,121 @@ function signUpAPI(username, password) {
   })
 };
 
+function logIn(account) {
 
-function signInAPI(navigation) {
-  console.log(account.username)
-  console.log(account.password)
+}
 
-  account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: account.username,
-      password: account.password
-    })
+export const getUser = (token) => {
+  if(token == null) return null;
+  return fetch('http://localhost:8080/api/user/get', {
+      method: 'GET',
+      headers: {"Authorization": "Bearer " + token}
+  }).then((response) => {
+    console.log(response.json());
+      return response.json();
+  }).catch((err) => {
+      console.log(err);
   })
-  // account.token._U = "TODO"
-  console.log(account.token)
-  if (checkSignIn()) {
-    navigation.reset({
+  }
+  
+  
+  export const dologin = async (username, password) => {
+    console.log("Logging In")
+    
+  
+    try {
+      const res = await fetch('http://159.89.120.69:8000/auth/login/', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                    username: username,
+                    password: password
+                  })
+        })
+      const result = await res.json()  
+      console.log(result)
+      return result
+    } catch {
+      console.log("No Response")
+      return null
+    }
+  }
+
+const signInAPI = async (navigation) => {
+  console.log("Starting Sign In")
+  const username = account.username
+  const password = account.password
+
+  if (username.length == 0 || password.length == 0) {
+    // this.setState({
+    //   errorMessage: 'Login and password is required.',
+    //   loginProcessing: false,
+    // });
+    console.log("Enter a Username and Password")
+  } else {
+    let loginResponse = await dologin(username, password);
+  
+    
+    console.log(loginResponse)
+    if (loginResponse.id > -1) {
+      navigation.reset({
       index: 0,
       routes: [{ name: 'Signed In' }],
       })
-  } else {
-    
+      
+    } else if (loginResponse.non_field_errors[0] === "Unable to log in with provided credentials.") {
+      
+    }
   }
-};
+}
+
+// function signInAPI(navigation) {
+//   console.log(account.username)
+//   console.log(account.password)
+
+//   account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
+//     method: 'POST',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       username: account.username,
+//       password: account.password
+//     })
+//   })
+//   // account.token._U = "TODO"
+//   console.log(account.token)
+//   if (checkSignIn()) {
+//     navigation.reset({
+//       index: 0,
+//       routes: [{ name: 'Signed In' }],
+//       })
+//   } else {
+    
+//   }
+// };
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function sendLoc(loc) {
-  console.log(loc);
-  fetch('https://mywebsite.com/endpoint/', { 
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      latitude: loc.latitude,
-      longitude: loc.longitude
-    })
-  });
-} 
+// function sendLoc(loc) {
+//   console.log(loc);
+//   fetch('https://mywebsite.com/endpoint/', { 
+//     method: 'POST',
+//     headers: {
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       latitude: loc.latitude,
+//       longitude: loc.longitude
+//     })
+//   });
+// } 
 
 export const Pages = {
     HomePage: class HomePage extends React.Component {
