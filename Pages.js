@@ -434,7 +434,7 @@ export const Pages = {
                 title="Remove Drink"
                 titleStyle={{ fontFamily: 'Barlow_400Regular', fontSize: 14 }}
               />
-              
+              <View style = {styles.historyBox}>
               <Text style={styles.historyText}>history</Text>
               <View
                     style={styles.lineShort}
@@ -458,7 +458,7 @@ export const Pages = {
                 <Text style={styles.drinkDate}>Dec 15</Text>
                 <Text style={styles.drinkNum}>2</Text>
               </View> 
-
+              </View>
               </View>
             </ScrollView>
           )

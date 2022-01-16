@@ -56,6 +56,14 @@ export const styles = StyleSheet.create({
     fontWeight: 'normal',
     fontSize: 40
   },
+  historyBox: {
+    width: '70%',
+    borderColor: '#ffffff',
+    borderWidth: 1,
+    alignItems: 'center',
+    paddingTop: 10,
+    paddingBottom: 10
+  },
   drinkCounter: {
     color: '#ffffff',
     fontFamily: 'Barlow_400Regular',
