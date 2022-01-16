@@ -35,16 +35,25 @@ var account = {
   first_name: "",
   last_name: "",
   location: "",
-  token: null
-}
-
-var groupCode = {
-  code: "",
-  token: null
+  token: null,
+  user_id: "",
 };
 
-function sendGroupCode(codeID) {
-  console.log(codeID) //TODO Logic with server
+function sendGroupCode() {
+  console.log(account.user_id) //TODO Logic with server
+  fetch('http://159.89.120.69:8000/friends/', { //TODO 
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    pk: account.token,
+    first_name: account.first_name,
+    last_name: account.last_name,
+    user_id: account.user_id,
+  })
+})
 };
 
 function signUpAPI(username, password) {
@@ -438,8 +447,8 @@ export const Pages = {
           //   <Text>Share this code with you group: </Text>
           //   <Text>{GenerateRandomCode.TextNumCode(2, 2)}</Text>
           // </View>
-          console.log("??");
-          Alert.alert("Share this code with your group:", GenerateRandomCode.TextNumCode(2, 2));
+          account.user_id = GenerateRandomCode.TextNumCode(2, 2);
+          Alert.alert("Share this code with your group:", account.user_id );
           // this.setState({
           //   count: this.state.count + 1
           //   <V
@@ -479,7 +488,7 @@ export const Pages = {
                   />
                   <TextInput
                     style={styles.joinTextInput}
-                    onChangeText={text => groupCode.code = text}
+                    onChangeText={text => account.user_id = text}
                     placeholder="Group Code"
                     secureTextEntry={false} />
                   <View style={{ flexDirection: 'row' }}>
@@ -491,7 +500,7 @@ export const Pages = {
                     <Button
                       title="Make a Group"
                       titleStyle={styles.buttonFont}
-                      onPress={this.generateCode}
+                      onPress={() => sendGroupCode()}
                       buttonStyle={styles.makeGroupButton} />
                   </View>
                 </View>
