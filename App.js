@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './Styles';
@@ -10,6 +10,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import AppLoading from 'expo-app-loading';
+import GenerateRandomCode from 'react-random-code-generator';
+import { Header } from '@react-navigation/stack';
 import {
   useFonts,
   Barlow_400Regular,
@@ -27,7 +29,16 @@ var account = {
   first_name: "",
   last_name: "",
   token: null
-}
+};
+
+var groupCode = {
+  code: "",
+  token: null
+};
+
+function sendGroupCode(codeID) {
+  console.log(codeID) //TODO Logic with server
+};
 
 
 function signUpAPI(username, password) {
@@ -52,7 +63,7 @@ function signUpAPI(username, password) {
 function signInAPI(username, password) {
   console.log(account.username)
   console.log(account.password)
-  account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
+  account.token = fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -69,7 +80,7 @@ function signInAPI(username, password) {
 
 function sendLoc(loc) {
   console.log(loc);
-  fetch('https://mywebsite.com/endpoint/', { 
+  fetch('https://mywebsite.com/endpoint/', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -80,43 +91,93 @@ function sendLoc(loc) {
       longitude: loc.longitude
     })
   });
-} 
+}
 
+// const generateCode = () => {
+//   return (
+//     <View>
+//       <Text>Share this code with you group: </Text>
+//       <Text>{GenerateRandomCode.TextNumCode(2, 2)}</Text>
+//     </View>
+//   );
+// }
 
 class SettingsPage extends React.Component {
 
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { count: 0 };
+  // }
+
+  generateCode = () => {
+    // <View>
+    //   <Text>Share this code with you group: </Text>
+    //   <Text>{GenerateRandomCode.TextNumCode(2, 2)}</Text>
+    // </View>
+    console.log("??");
+    Alert.alert("Share this code with your group:", GenerateRandomCode.TextNumCode(2, 2));
+    // this.setState({
+    //   count: this.state.count + 1
+    //   <V
+    // })
+  }
+
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.centerIt}>
-          <Text style={styles.currGroupText}> Current Group </Text>
-          <Image
-            style={styles.groupLogo}
-            source={require('./assets/icons8-group-128.png')}
-          />
-        </View>
-        <View style={styles.listBorder}>
-          <FlatList
-            data={[
-              { key: 'Kenneth Xing' },
-              { key: 'Stripey Xing' },
-              { key: 'Lukas Franz' },
-              { key: 'Wilson Rabbit' },
-            ]}
-            renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
-          />
+      <KeyboardAvoidingView
+        //keyboardVerticalOffset={Header.HEIGHT + 20}
+        //behavior="padding"
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}>
+        <View style={{ justifyContent: "flex-end", padding: 5 }}>
+          <View style={styles.centerIt}>
+            <Text style={styles.currGroupText}> Current Group </Text>
+            <Image
+              style={styles.groupLogo}
+              source={require('./assets/icons8-group-128.png')}
+            />
+          </View>
+          <View style={styles.listBorder}>
+            <FlatList
+              data={[
+                { key: 'Kenneth Xing' },
+                { key: 'Stripey Xing' },
+                { key: 'Lukas Franz' },
+                { key: 'Wilson Rabbit' },
+              ]}
+              renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
+            />
+          </View>
+
+          <View style={styles.createGroup}>
+            <View
+              style={styles.line}
+            />
+            <TextInput
+              style={styles.joinTextInput}
+              onChangeText={text => groupCode.code = text}
+              placeholder="Group Code"
+              secureTextEntry={false} />
+            <View style={{ flexDirection: 'row' }}>
+              <Button
+                title="Join a Group"
+                titleStyle={styles.buttonFont}
+                onPress={() => sendGroupCode()}
+                buttonStyle={styles.joinGroupButton} />
+              <Button
+                title="Make a Group"
+                titleStyle={styles.buttonFont}
+                onPress={this.generateCode}
+                buttonStyle={styles.makeGroupButton} />
+            </View>
+          </View>
         </View>
 
-        <View style={styles.createGroup}>
-          <View
-            style={styles.line}
-          />
-          <Text style={styles.createGroupText}>Create a New Group</Text>
-        </View>
-
-      </SafeAreaView>
+      </KeyboardAvoidingView >
     )
+
   }
+
 }
 
 export const BotBar = () => (
@@ -127,18 +188,18 @@ export const BotBar = () => (
         tabBarShowLabel={false}
         screenOptions={{
 
-          tabBarStyle: {backgroundColor: '#121212'},
+          tabBarStyle: { backgroundColor: '#121212' },
           tabBarShowLabel: false,
           headerShown: false,
         }}
-        >
-         <Tab.Screen name="Home" component={Pages.HomePage} />
+      >
+        <Tab.Screen name="Home" component={Pages.HomePage} />
         <Tab.Screen name="Drink Counter" component={Pages.CounterPage} />
         {/* <Tab.Screen name="Data" component={DataPage}/>  */}
-        <Tab.Screen name="My Groups" component={SettingsPage}/> 
-        <Tab.Screen name="Map" component={Pages.MapPage}/> 
-        <Tab.Screen name="Sign Up" component={Pages.SignUpPage}/> 
-        <Tab.Screen name="Sign In" component={Pages.SignInPage}/> 
+        <Tab.Screen name="My Groups" component={SettingsPage} />
+        <Tab.Screen name="Map" component={Pages.MapPage} />
+        <Tab.Screen name="Sign Up" component={Pages.SignUpPage} />
+        <Tab.Screen name="Sign In" component={Pages.SignInPage} />
 
       </Tab.Navigator>
     </View>
@@ -162,12 +223,12 @@ export default function App() {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}>
-      
+
         <View style={styles.container}>
 
 
           <StatusBar style="auto" />
-          <BotBar/>
+          <BotBar />
         </View>
       </KeyboardAvoidingView>
     );
