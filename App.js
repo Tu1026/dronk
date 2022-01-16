@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, image } from 'react-native'; // Removed Button
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Image } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -120,6 +120,7 @@ const SignUpPage = () => {
       <Button
         title="Sign In"
         onPress={() => signUpAPI()}
+        buttonStyle={styles.buttonCounter}
       />
     </View>
   </KeyboardAvoidingView>
@@ -152,6 +153,7 @@ const SignInPage = () => {
       <Button
           title="Sign In"
           onPress={() => signInAPI()}
+          buttonStyle={styles.buttonCounter}
       /> 
     </View>
   </KeyboardAvoidingView>
@@ -165,7 +167,7 @@ const MapPage = () => (
     userInterfaceStyle={"dark"}
     showsUserLocation={true}
     followsUserLocation={true}
-    showsMyLocationButton={true}
+    showsMyLocationButton={true}>
 
   </MapView>
 );
@@ -255,7 +257,7 @@ export const BotBar = () => (
         >
          <Tab.Screen name="Home" component={HomePage} />
         <Tab.Screen name="Drink Counter" component={CounterPage} />
-        <Tab.Screen name="Data" component={DataPage}/> 
+        {/* <Tab.Screen name="Data" component={DataPage}/>  */}
         <Tab.Screen name="My Groups" component={SettingsPage}/> 
         <Tab.Screen name="Map" component={MapPage}/> 
         <Tab.Screen name="Sign Up" component={SignUpPage}/> 
@@ -355,7 +357,7 @@ const styles = StyleSheet.create({
 
   logIn: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#002137',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,
