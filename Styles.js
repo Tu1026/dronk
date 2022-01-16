@@ -10,6 +10,32 @@ export const styles = StyleSheet.create({
     color: "#ffffff",
     padding: 10
   },
+  welcomeMessage: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular_Italic',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginRight: 130,
+    marginBottom: 30,
+  },
+  newMemberMsg: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular_Italic',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginRight: 100
+  },
+  newMemberMsg2: {
+    color: '#faee9e',
+    fontFamily: 'Barlow_400Regular_Italic',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginRight: 210,
+    marginBottom: 30
+  },
   mainLogo: {
     width: 75,
     height: 75,

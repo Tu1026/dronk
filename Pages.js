@@ -220,6 +220,8 @@ export const Pages = {
             style={styles.container}>
             
             <View style={styles.logIn}>
+            <Text style={styles.newMemberMsg}>Let's get this party</Text>
+            <Text style={styles.newMemberMsg2}>started!</Text>
               {/* <Text style={styles.logInText} fontSize={40}> First name: </Text> */}
               <TextInput
                 style={styles.textInput}
@@ -266,7 +268,7 @@ export const Pages = {
           <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.container}>
             <View style={styles.logIn}>
-              
+              <Text style={styles.welcomeMessage}>Welcome back!</Text>
               {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
               <TextInput
                   style={styles.textInput}
