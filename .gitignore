@@ -1,2 +1,6 @@
 .expo/
 node_modules/
+.*
+!.gitignore
+*.sqlite3
+*.pyc
