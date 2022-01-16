@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image } from 'react-native'; // Removed Button
+import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image, Alert } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './Styles';
@@ -18,6 +18,8 @@ import {
   Barlow_700Bold,
   Barlow_700Bold_Italic,
 } from "@expo-google-fonts/barlow";
+import GenerateRandomCode from 'react-random-code-generator';
+
 
 function checkSignIn() {
   if (account.token != null) { //TODO
@@ -35,6 +37,15 @@ var account = {
   location: "",
   token: null
 }
+
+var groupCode = {
+  code: "",
+  token: null
+};
+
+function sendGroupCode(codeID) {
+  console.log(codeID) //TODO Logic with server
+};
 
 function signUpAPI(username, password) {
   console.log(account.username)
@@ -333,21 +344,29 @@ export const Pages = {
         }
       },
 
-    CounterPage: class CounterPage extends React.Component {
+      CounterPage: class CounterPage extends React.Component {
 
         state = {
           value: 0,
           total_drinks: 0
         }
-      
+    
         incrementValue = () => {
           this.setState({
             value: this.state.value + 1,
             total_drinks: this.state.total_drinks + 1
           })
-      
           console.log("Value: " + (this.state.value + 1))
         }
+    
+        decrementValue = () => {
+          this.setState({
+            value: (this.state.value > 1) ? this.state.value - 1 : 0,
+            total_drinks: this.state.total_drinks - 1
+          })
+          console.log("Value: " + (this.state.value - 1))
+        }
+    
         render() {
           return (
             <View style={styles.titlePage}>
@@ -362,7 +381,14 @@ export const Pages = {
                     color="white"
                   />
                 }
-                buttonStyle={styles.buttonCounter} onPress={this.incrementValue} title=" Add"
+                buttonStyle={styles.buttonCounter} onPress={this.incrementValue} title="  Add"
+                titleStyle={styles.buttonFont}
+              />
+              <Button
+                buttonStyle={styles.removeDrinkButton}
+                onPress={this.decrementValue}
+                title="Remove Drink"
+                titleStyle={{ fontFamily: 'Barlow_400Regular', fontSize: 14 }}
               />
             </View>
           )
@@ -371,39 +397,81 @@ export const Pages = {
       
       SettingsPage: class SettingsPage extends React.Component {
 
+        // constructor(props) {
+        //   super(props);
+        //   this.state = { count: 0 };
+        // }
+      
+        generateCode = () => {
+          // <View>
+          //   <Text>Share this code with you group: </Text>
+          //   <Text>{GenerateRandomCode.TextNumCode(2, 2)}</Text>
+          // </View>
+          console.log("??");
+          Alert.alert("Share this code with your group:", GenerateRandomCode.TextNumCode(2, 2));
+          // this.setState({
+          //   count: this.state.count + 1
+          //   <V
+          // })
+        }
+      
         render() {
           return (
-            <SafeAreaView style={styles.container}>
-              <View style={styles.centerIt}>
-                <Text style={styles.currGroupText}> Current Group </Text>
-                <Image
-                  style={styles.groupLogo}
-                  source={require('./assets/icons8-group-128.png')}
-                />
-              </View>
-              <View style={styles.listBorder}>
-                <FlatList
-                  data={[
-                    { key: 'Kenneth Xing' },
-                    { key: 'Stripey Xing' },
-                    { key: 'Lukas Franz' },
-                    { key: 'Wilson Rabbit' },
-                  ]}
-                  renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
-                />
+            <KeyboardAvoidingView
+              //keyboardVerticalOffset={Header.HEIGHT + 20}
+              //behavior="padding"
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              style={styles.container}>
+              <View style={{ justifyContent: "flex-end", padding: 5 }}>
+                <View style={styles.centerIt}>
+                  <Text style={styles.currGroupText}> Current Group </Text>
+                  <Image
+                    style={styles.groupLogo}
+                    source={require('./assets/icons8-group-128.png')}
+                  />
+                </View>
+                <View style={styles.listBorder}>
+                  <FlatList
+                    data={[
+                      { key: 'Kenneth Xing' },
+                      { key: 'Stripey Xing' },
+                      { key: 'Lukas Franz' },
+                      { key: 'Wilson Rabbit' },
+                    ]}
+                    renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
+                  />
+                </View>
+      
+                <View style={styles.createGroup}>
+                  <View
+                    style={styles.line}
+                  />
+                  <TextInput
+                    style={styles.joinTextInput}
+                    onChangeText={text => groupCode.code = text}
+                    placeholder="Group Code"
+                    secureTextEntry={false} />
+                  <View style={{ flexDirection: 'row' }}>
+                    <Button
+                      title="Join a Group"
+                      titleStyle={styles.buttonFont}
+                      onPress={() => sendGroupCode()}
+                      buttonStyle={styles.joinGroupButton} />
+                    <Button
+                      title="Make a Group"
+                      titleStyle={styles.buttonFont}
+                      onPress={this.generateCode}
+                      buttonStyle={styles.makeGroupButton} />
+                  </View>
+                </View>
               </View>
       
-              <View style={styles.createGroup}>
-                <View
-                  style={styles.line}
-                />
-                <Text style={styles.createGroupText}>Create a New Group</Text>
-              </View>
-      
-            </SafeAreaView>
+            </KeyboardAvoidingView >
           )
+      
         }
-      },
+      
+      }
 }
 
 export class Navigator extends React.Component {

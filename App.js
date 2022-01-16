@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -12,6 +12,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import AppLoading from 'expo-app-loading';
+import GenerateRandomCode from 'react-random-code-generator';
+import { Header } from '@react-navigation/stack';
 import {
   useFonts,
   Barlow_400Regular,
@@ -29,7 +31,16 @@ var account = {
   first_name: "",
   last_name: "",
   token: null
-}
+};
+
+var groupCode = {
+  code: "",
+  token: null
+};
+
+function sendGroupCode(codeID) {
+  console.log(codeID) //TODO Logic with server
+};
 
 
 
@@ -72,7 +83,7 @@ function signInAPI(username, password) {
 
 function sendLoc(loc) {
   console.log(loc);
-  fetch('https://mywebsite.com/endpoint/', { 
+  fetch('https://mywebsite.com/endpoint/', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -83,7 +94,17 @@ function sendLoc(loc) {
       longitude: loc.longitude
     })
   });
-} 
+}
+
+// const generateCode = () => {
+//   return (
+//     <View>
+//       <Text>Share this code with you group: </Text>
+//       <Text>{GenerateRandomCode.TextNumCode(2, 2)}</Text>
+//     </View>
+//   );
+// }
+
 
 
 
@@ -96,7 +117,6 @@ function sendLoc(loc) {
 //           <Tab.Navigator
 //             tabBarShowLabel={false}
 //             screenOptions={{
-
 //               tabBarStyle: {backgroundColor: '#121212'},
 //               tabBarShowLabel: false,
 //               headerShown: false,
@@ -133,7 +153,7 @@ export default function App() {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}>
-      
+
         <View style={styles.container}>
 
 
