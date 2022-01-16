@@ -336,8 +336,10 @@ export const Pages = {
         state = {
           active: true,
           location: { 
-              latitude: 49.26918850708335, //TODO CHANGE COORD
-              longitude: -123.19003455340864,
+            latitude: 49.269657,
+            longitude: -123.250029,
+              // latitude: 49.26918850708335, //TODO CHANGE COORD
+              // longitude: -123.19003455340864,
           }
 
         }
@@ -467,6 +469,12 @@ export const Pages = {
         //   super(props);
         //   this.state = { count: 0 };
         // }
+        state = {
+          groupMembers1: [{ key: 'Kenneth Xing' },
+          { key: 'Stripey Xing' },
+          { key: 'Lukas Franz' },
+          { key: 'Wilson Rabbit' },],
+        }
       
         generateCode = () => {
           // <View>
@@ -479,6 +487,14 @@ export const Pages = {
           //   count: this.state.count + 1
           //   <V
           // })
+        }
+        joinNewGroup = () => {
+          this.setState({
+            groupMembers1:
+              [{ key: 'Jonathan Chu' },
+              { key: 'Jeffrey Bezos' },],
+          })
+          console.log("Eneterd new group")
         }
       
         render() {
@@ -498,12 +514,7 @@ export const Pages = {
                 </View>
                 <View style={styles.listBorder}>
                   <FlatList
-                    data={[
-                      { key: 'Kenneth Xing' },
-                      { key: 'Stripey Xing' },
-                      { key: 'Lukas Franz' },
-                      { key: 'Wilson Rabbit' },
-                    ]}
+                    data={this.state.groupMembers1}
                     renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
                   />
                 </View>
@@ -521,7 +532,7 @@ export const Pages = {
                     <Button
                       title="Join a Group"
                       titleStyle={styles.buttonFont}
-                      onPress={() => sendGroupCode()}
+                      onPress={this.joinNewGroup}
                       buttonStyle={styles.joinGroupButton} />
                     <Button
                       title="Make a Group"
