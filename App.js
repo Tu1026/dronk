@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Text, View, Image, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
+
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -19,17 +20,145 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
-// export default class Playground extends Component {
-//   render() {
-//     return (
-//       <MapView
-//       provider={PROVIDER_GOOGLE}
-//       >
+var account = {
+  username: "",
+  password: "",
+  first_name: "",
+  last_name: "",
+  token: null
+}
 
-//       </MapView>
-//     )
-//   }
-// }
+
+function signUpAPI(username, password) {
+  console.log(account.username)
+  console.log(account.password)
+  fetch('http://159.89.120.69:8000/users/', { //TODO 
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: account.username,
+      first_name: account.first_name,
+      last_name: account.last_name,
+      password: account.password
+    })
+  })
+};
+
+
+function signInAPI(username, password) {
+  console.log(account.username)
+  console.log(account.password)
+  account.token= fetch('http://159.89.120.69:8000/auth/login/', { //TODO 
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: account.username,
+      password: account.password
+    })
+  })
+  console.log(account.token)
+};
+
+
+function sendLoc(loc) {
+  console.log(loc);
+  fetch('https://mywebsite.com/endpoint/', { 
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      latitude: loc.latitude,
+      longitude: loc.longitude
+    })
+  });
+} 
+
+
+const SignUpPage = () => {
+  return (
+  <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={styles.container}>
+    
+    <View style={styles.logIn}>
+      {/* <Text style={styles.logInText} fontSize={40}> First name: </Text> */}
+      <TextInput
+        style={styles.textInput}
+        onChangeText={text => account.first_name=text}
+        placeholder='First Name'
+        secureTextEntry={false}
+        />
+      {/* <Text style={styles.logInText} fontSize={50}> Last name: </Text> */}
+      <TextInput
+        style={styles.textInput}
+        onChangeText={text => account.last_name=text}
+        placeholder='Last Name'
+        secureTextEntry={false}
+        />
+      {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
+      <TextInput
+        style={styles.textInput}
+        onChangeText={text => account.username=text}
+        placeholder='Email'
+        secureTextEntry={false}
+        />
+      {/* <Text style={styles.logInText} fontSize={50}> Password: </Text> */}
+      <TextInput
+        style={styles.textInput}
+        onChangeText={text => account.password=text}
+        secureTextEntry={true}
+        placeholder="Password"
+        clearTextOnFocus = {true}
+      />
+      <Button
+        title="Sign In"
+        onPress={() => signUpAPI()}
+        buttonStyle={styles.buttonCounter}
+      />
+    </View>
+  </KeyboardAvoidingView>
+  );
+};
+
+const SignInPage = () => {
+  return ( 
+  <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+  style={styles.container}>
+    <View style={styles.logIn}>
+      
+      {/* <Text style={styles.logInText} fontSize={50}> Username: </Text> */}
+      <TextInput
+          style={styles.textInput}
+          onChangeText={text => account.username=text}
+          placeholder="Email"
+          secureTextEntry={false}
+        />
+      
+      {/* <Text style={styles.logInText} fontSize={50}> Password: </Text> */}
+      <TextInput
+        style={styles.textInput}
+        onChangeText={text => account.password=text}
+        placeholder="Password"
+        secureTextEntry={true}
+        clearTextOnFocus = {true}
+      />
+      
+      <Button
+          title="Sign In"
+          onPress={() => signInAPI()}
+          buttonStyle={styles.buttonCounter}
+      /> 
+    </View>
+  </KeyboardAvoidingView>
+  );
+};
 
 const MapPage = () => (
   <MapView
@@ -38,11 +167,10 @@ const MapPage = () => (
     userInterfaceStyle={"dark"}
     showsUserLocation={true}
     followsUserLocation={true}
-    showsMyLocationButton={true}
-  >
+    showsMyLocationButton={true}>
 
   </MapView>
-)
+);
 
 // const CounterPage = () => (
 //   <View style={styles.titlePage}>
@@ -152,18 +280,20 @@ export const BotBar = () => (
       <Tab.Navigator
         tabBarShowLabel={false}
         screenOptions={{
-          tabBarStyle: { backgroundColor: '#121212' },
-          tabBarShowLabel: true,
-          // tabBarBackground: () => (
-          //   <View style={styles.container}/>
-          // ),
+
+          tabBarStyle: {backgroundColor: '#121212'},
+          tabBarShowLabel: false,
           headerShown: false,
         }}
-      >
-        <Tab.Screen name="Home" component={HomePage} />
+        >
+         <Tab.Screen name="Home" component={HomePage} />
         <Tab.Screen name="Drink Counter" component={CounterPage} />
-        <Tab.Screen name="Map" component={MapPage} />
-        <Tab.Screen name="My Groups" component={SettingsPage} />
+        {/* <Tab.Screen name="Data" component={DataPage}/>  */}
+        <Tab.Screen name="My Groups" component={SettingsPage}/> 
+        <Tab.Screen name="Map" component={MapPage}/> 
+        <Tab.Screen name="Sign Up" component={SignUpPage}/> 
+        <Tab.Screen name="Sign In" component={SignInPage}/> 
+
       </Tab.Navigator>
     </View>
   </NavigationContainer>
@@ -172,8 +302,7 @@ export const BotBar = () => (
 
 
 export default function App() {
-
-  let [fontsLoaded] = useFonts({
+let [fontsLoaded] = useFonts({
     Barlow_400Regular,
     Barlow_400Regular_Italic,
     Barlow_700Bold,
@@ -184,25 +313,31 @@ export default function App() {
     return <AppLoading />
   } else {
     return (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}>
+      
+        <View style={styles.container}>
 
-      <View style={styles.container}>
 
-        {/* <Text>Open up App.js to start working on your app!</Text>
-      <Text style={{textAlign:'center'}}>DrinkSafe is an app developed entirely in 24 hours during nwHacks 2022.</Text> */}
-        <StatusBar style="auto" />
-        <BotBar />
-      </View>
-
+          <StatusBar style="auto" />
+          <BotBar/>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#002137',
-    //alignItems: 'center',
-    //justifyContent: 'center'
+  },
+  logInText: {
+    padding: 50,
+    color: "#ffffff",
+    padding: 10
   },
   mainLogo: {
     width: 75,
@@ -257,6 +392,28 @@ const styles = StyleSheet.create({
   map: {
     flex: 1
   },
+
+  logIn: {
+    flex: 1,
+    backgroundColor: '#002137',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  textInput: {
+    height: 50,
+    margin: 12,
+    width: "80%",
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: '#808080', 
+    borderColor: '#808080',
+    borderWidth: 10,
+    borderRadius: 30, 
+    fontSize: 25,
+  },
+
+
   titlePage: {
     flex: 1,
     backgroundColor: '#002137',
