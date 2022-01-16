@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
   mainLogo: {
     width: 75,
     height: 75,
-    marginLeft: '16%',
-    marginTop: '0.3%'
+    marginLeft: '17%',
+    marginTop: '4.5%'
   },
   normalText: {
     color: '#ffffff',
@@ -22,6 +22,13 @@ export const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 50
+  },
+  historyText: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 40
   },
   drinkCounter: {
     color: '#ffffff',
@@ -31,10 +38,25 @@ export const styles = StyleSheet.create({
     fontSize: 130,
     marginTop: 30
   },
+  drinkDate: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular',
+    fontSize: 28,
+    marginRight: 40,
+    marginBottom: 5
+  },
+  drinkNum: {
+    color: '#faee9e',
+    fontFamily: 'Barlow_700Bold',
+    fontSize: 28,
+    marginLeft: 50,
+    marginBottom: 5
+  },
   dronkTitle: {
     color: '#ffffff',
     fontFamily: 'Barlow_400Regular',
     fontSize: 70,
+    marginTop: 20
   },
   keepingFunNights: {
     color: '#ffffff',
@@ -92,13 +114,22 @@ export const styles = StyleSheet.create({
     borderRadius: 30,
     fontSize: 25,
   },
-
-
+  scroll: {
+    flex: 1,
+    backgroundColor: '#002137',
+  },
   titlePage: {
     flex: 1,
     backgroundColor: '#002137',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  counterTitle: {
+    flex: 1,
+    backgroundColor: '#002137',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 120,
   },
   buttonCounter: {
     backgroundColor: '#002137',
@@ -159,7 +190,13 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#ffffff',
     borderBottomWidth: 1,
     marginTop: 0,
-    // borderRadius: ,
+  },
+  lineShort: {
+    width: '30%',
+    borderBottomColor: '#ffffff',
+    borderBottomWidth: 1,
+    marginTop: 0,
+    marginBottom: 20,
   },
   createGroup: {
     marginTop: '10%',
@@ -204,5 +241,19 @@ export const styles = StyleSheet.create({
   },
   buttonFont: {
     fontFamily: 'Barlow_400Regular'
+  },
+  buttonHomeL: {
+    borderBottomColor: '#ffffff',
+    borderBottomWidth: 1,
+    backgroundColor: '#002137',
+    marginTop: 150,
+    marginRight: 20
+  },
+  buttonHomeR: {
+    borderBottomColor: '#ffffff',
+    borderBottomWidth: 1,
+    backgroundColor: '#002137',
+    marginTop: 150,
+    marginLeft: 20,
   }
 });

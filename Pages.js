@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image, Alert } from 'react-native'; // Removed Button
+import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image, Alert, ScrollView } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { styles } from './Styles';
@@ -195,14 +195,18 @@ export const Pages = {
                     </View>
                     <Text style={styles.keepingFunNights}>keeping fun nights  </Text>
                     <Text style={styles.worryFree} textAlign={'right'}> worry-free </Text>
-                    <Button
-                    title="Sign in"
-                    onPress={() => this.props.navigation.navigate('Sign In')}
-                    buttonStyle={styles.buttonCounter}/>
-                    <Button
-                    title="Sign Up"
-                    onPress={() => this.props.navigation.navigate('Sign Up')}
-                    buttonStyle={styles.buttonCounter}/> 
+                    <View style={{ flexDirection: 'row' }}>
+                      <Button
+                      title="Sign in"
+                      onPress={() => this.props.navigation.navigate('Sign In')}
+                      buttonStyle={styles.buttonHomeL}
+                      titleStyle={styles.buttonFont}/>
+                      <Button
+                      title="Sign Up"
+                      onPress={() => this.props.navigation.navigate('Sign Up')}
+                      buttonStyle={styles.buttonHomeR}
+                      titleStyle={styles.buttonFont}/> 
+                    </View>
                     {/* <Text style={styles.useBottomNav}>Use the bottom navigation bar to get started</Text> */}
                 </View>
             )
@@ -369,7 +373,8 @@ export const Pages = {
     
         render() {
           return (
-            <View style={styles.titlePage}>
+            <ScrollView style={styles.scroll}>
+            <View style={styles.counterTitle}>
               <Text style={styles.normalText}> drink </Text>
               <Text style={styles.normalText}> counter: </Text>
               <Text style={styles.drinkCounter}>{this.state.value}</Text>
@@ -390,12 +395,38 @@ export const Pages = {
                 title="Remove Drink"
                 titleStyle={{ fontFamily: 'Barlow_400Regular', fontSize: 14 }}
               />
-            </View>
+              
+              <Text style={styles.historyText}>history</Text>
+              <View
+                    style={styles.lineShort}
+              />
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.drinkDate}>Jan 15</Text>
+                <Text style={styles.drinkNum}>3</Text>
+              </View>
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.drinkDate}>Jan 10</Text>
+                <Text style={styles.drinkNum}>1</Text>
+              </View>
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.drinkDate}>Jan 03</Text>
+                <Text style={styles.drinkNum}>4</Text>
+              </View> 
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.drinkDate}>Dec 15</Text>
+                <Text style={styles.drinkNum}>2</Text>
+              </View> 
+
+              </View>
+            </ScrollView>
           )
         }
       },
       
-      SettingsPage: class SettingsPage extends React.Component {
+      GroupsPage: class GroupsPage extends React.Component {
 
         // constructor(props) {
         //   super(props);
@@ -514,7 +545,7 @@ class BotBar extends React.Component {
               >
               <Tab.Screen name="Drink Counter" component={Pages.CounterPage} />
               {/* <Tab.Screen name="Data" component={DataPage}/>  */}
-              <Tab.Screen name="My Groups" component={Pages.SettingsPage}/> 
+              <Tab.Screen name="My Groups" component={Pages.GroupsPage}/> 
               <Tab.Screen name="Map" component={Pages.MapPage}/> 
             </Tab.Navigator>
           </View>

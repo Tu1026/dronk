@@ -125,7 +125,7 @@ function sendLoc(loc) {
 //             <Tab.Screen name="Home" component={Pages.HomePage} />
 //             <Tab.Screen name="Drink Counter" component={Pages.CounterPage} />
 //             {/* <Tab.Screen name="Data" component={DataPage}/>  */}
-//             <Tab.Screen name="My Groups" component={Pages.SettingsPage}/> 
+//             <Tab.Screen name="My Groups" component={Pages.GroupsPage}/> 
 //             <Tab.Screen name="Map" component={Pages.MapPage}/> 
 //             <Tab.Screen name="Sign Up" component={Pages.SignUpPage}/> 
 //             <Tab.Screen name="Sign In" component={Pages.SignInPage}/> 
