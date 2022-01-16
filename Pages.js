@@ -449,6 +449,7 @@ export const Pages = {
           // </View>
           account.user_id = GenerateRandomCode.TextNumCode(2, 2);
           Alert.alert("Share this code with your group:", account.user_id );
+          sendGroupCode();
           // this.setState({
           //   count: this.state.count + 1
           //   <V
@@ -500,7 +501,7 @@ export const Pages = {
                     <Button
                       title="Make a Group"
                       titleStyle={styles.buttonFont}
-                      onPress={() => sendGroupCode()}
+                      onPress={this.generateCode}
                       buttonStyle={styles.makeGroupButton} />
                   </View>
                 </View>
