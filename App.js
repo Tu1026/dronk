@@ -57,10 +57,12 @@ class HomePage extends React.Component {
   render() {
     return (
       <View style={styles.titlePage}>
-        <Image
-          style={styles.mainLogo}
-          source={require('./assets/icons8-party-100.png')} />
-        <Text style={styles.dronkTitle}> dronk. </Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Image
+            style={styles.mainLogo}
+            source={require('./assets/icons8-party-100.png')} />
+          <Text style={styles.dronkTitle}> dronk. </Text>
+        </View>
         <Text style={styles.keepingFunNights}>keeping fun nights  </Text>
         <Text style={styles.worryFree} textAlign={'right'}> worry-free </Text>
         <Text style={styles.useBottomNav}>Use the bottom navigation bar to get started</Text>
@@ -171,8 +173,10 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   mainLogo: {
-    width: 50,
-    height: 50,
+    width: 75,
+    height: 75,
+    marginLeft: '16%',
+    marginTop: '0.3%'
   },
   normalText: {
     color: '#ffffff',
@@ -193,7 +197,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Barlow_400Regular',
     fontSize: 70,
-    marginLeft: '30%'
   },
   keepingFunNights: {
     color: '#ffffff',
