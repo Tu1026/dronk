@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
-import { StyleSheet, Text, View} from 'react-native';
-import {Button} from 'react-native-elements/dist';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements/dist';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -37,7 +38,7 @@ const MapPage = () => (
     showsUserLocation={true}
     followsUserLocation={true}
     showsMyLocationButton={true}
-    >
+  >
 
   </MapView>
 )
@@ -51,10 +52,10 @@ const MapPage = () => (
 //   </View>
 // );
 
-class CounterPage extends React.Component{
-  
+class CounterPage extends React.Component {
+
   state = {
-    value: 0, 
+    value: 0,
     total_drinks: 0
   }
 
@@ -66,14 +67,22 @@ class CounterPage extends React.Component{
 
     console.log("Value: " + (this.state.value + 1))
   }
-  render (){
-    return(
+  render() {
+    return (
       <View style={styles.titlePage}>
         <Text style={styles.normalText}> drink </Text>
-        <Text style={styles.normalText}> counter: </Text>        
+        <Text style={styles.normalText}> counter: </Text>
         <Text style={styles.drinkCounter}>{this.state.value}</Text>
-        <Button 
-          buttonStyle={styles.buttonCounter} onPress={this.incrementValue} title="Add Drink" />
+        <Button
+          icon={
+            <Icon
+              name="beer"
+              size={30}
+              color="white"
+            />
+          }
+          buttonStyle={styles.buttonCounter} onPress={this.incrementValue} title=" Add"
+        />
       </View>
     )
   }
@@ -86,27 +95,27 @@ const SettingsPage = () => (
 );
 
 export const BotBar = () => (
-  
+
   <NavigationContainer>
     <View style={styles.container}>
-      <Tab.Navigator 
+      <Tab.Navigator
         tabBarShowLabel={false}
         screenOptions={{
-          tabBarStyle: {backgroundColor: '#121212'},
+          tabBarStyle: { backgroundColor: '#121212' },
           tabBarShowLabel: false,
           // tabBarBackground: () => (
           //   <View style={styles.container}/>
           // ),
           headerShown: false,
         }}
-        >
-        <Tab.Screen name="Data" component={CounterPage}/> 
-        <Tab.Screen name="Settings" component={SettingsPage}/> 
-        <Tab.Screen name="Map" component={MapPage}/> 
+      >
+        <Tab.Screen name="Data" component={CounterPage} />
+        <Tab.Screen name="Settings" component={SettingsPage} />
+        <Tab.Screen name="Map" component={MapPage} />
       </Tab.Navigator>
-    </View>  
+    </View>
   </NavigationContainer>
-  
+
 );
 
 
@@ -118,20 +127,20 @@ export default function App() {
     Barlow_700Bold_Italic,
   });
 
-  if (!fontsLoaded){
+  if (!fontsLoaded) {
     return <AppLoading />
   } else {
-  return (
-    
-    <View style={styles.container}>
-      
-      {/* <Text>Open up App.js to start working on your app!</Text>
+    return (
+
+      <View style={styles.container}>
+
+        {/* <Text>Open up App.js to start working on your app!</Text>
       <Text style={{textAlign:'center'}}>DrinkSafe is an app developed entirely in 24 hours during nwHacks 2022.</Text> */}
-      <StatusBar style="auto" />
-      <BotBar/>
-    </View>
-    
-  );
+        <StatusBar style="auto" />
+        <BotBar />
+      </View>
+
+    );
   }
 }
 
@@ -147,14 +156,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Barlow_400Regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 30
+    fontSize: 50
   },
   drinkCounter: {
     color: '#ffffff',
-    fontFamily: 'Barlow_700Bold',
+    fontFamily: 'Barlow_400Regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 70
+    fontSize: 130,
+    marginTop: 30
   },
   map: {
     flex: 1
@@ -164,10 +174,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#002137',
     alignItems: 'center',
     justifyContent: 'center'
-  }, 
+  },
   buttonCounter: {
-    backgroundColor: '#00406C',
-    padding: 20,
-    borderRadius: 15  
+    backgroundColor: '#002137',
+    borderColor: 'white',
+    borderWidth: 3,
+    padding: 15,
+    borderRadius: 15,
+    marginTop: 20
   }
 });
