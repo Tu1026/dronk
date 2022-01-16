@@ -531,26 +531,56 @@ export class Navigator extends React.Component {
 class BotBar extends React.Component {
 
   render() {
-      return (
-        <NavigationContainer independent={true}>
-          <View style={styles.container}>
-            <Tab.Navigator
-              tabBarShowLabel={false}
-              screenOptions={{
+    return (
+      <NavigationContainer independent={true}>
+        <View style={styles.container}>
+          <Tab.Navigator
+            tabBarShowLabel={false}
+            screenOptions={{
 
-                tabBarStyle: {backgroundColor: '#121212'},
-                tabBarShowLabel: false,
-                headerShown: false,
-              }}
-              >
-              <Tab.Screen name="Drink Counter" component={Pages.CounterPage} />
-              {/* <Tab.Screen name="Data" component={DataPage}/>  */}
-              <Tab.Screen name="My Groups" component={Pages.GroupsPage}/> 
-              <Tab.Screen name="Map" component={Pages.MapPage}/> 
-            </Tab.Navigator>
-          </View>
-        </NavigationContainer>
-      );
+              tabBarStyle: { backgroundColor: '#121212' },
+              tabBarShowLabel: false,
+              headerShown: false,
+            }}
+          >
+            <Tab.Screen
+              name="Drink Counter"
+              component={Pages.CounterPage}
+              options={{
+                tabBarLabel: 'drink',
+                tabBarIcon: () => (
+                  <Icon
+                    name="beer"
+                    size={30}
+                    color="white" />)
+              }} />
+            {/* <Tab.Screen name="Data" component={DataPage}/>  */}
+            <Tab.Screen
+              name="My Groups"
+              component={Pages.GroupsPage}
+              options={{
+                tabBarLabel: 'ppl',
+                tabBarIcon: () => (
+                  <Icon
+                    name="users"
+                    size={30}
+                    color="white" />)
+              }} />
+            <Tab.Screen
+              name="Map"
+              component={Pages.MapPage}
+              options={{
+                tabBarLabel: 'Mapmap',
+                tabBarIcon: () => (
+                  <Icon
+                    name="map"
+                    size={30}
+                    color="white" />)
+              }} />
+          </Tab.Navigator>
+        </View>
+      </NavigationContainer>
+    );
   }
 }
 
