@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image, Alert, ScrollView } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -333,7 +333,37 @@ export const Pages = {
 
 
     MapPage: class MapPage extends React.Component {
+        state = {
+          active: true,
+          location: { 
+              latitude: 49.26918850708335, //TODO CHANGE COORD
+              longitude: -123.19003455340864,
+          }
+
+        }
+        isFriendClose(coordinate) {
+          console.log(coordinate)
+          const dlat = coordinate.latitude - this.state.location.latitude
+          const dlng = coordinate.longitude - this.state.location.longitude
+          console.log((dlat**2 + dlng**2)**0.5)
+          if ((dlat**2 + dlng**2)**0.5 > 0.001 && this.state.active) {
+            this.state.active = false
+            Alert.alert(
+              "Far From Buddy",
+              "Don't forget to tell your friend where you are",
+              [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ]
+           );
+          }
+        }
         render() {
+          
           return (
             <MapView
               style={styles.map}
@@ -341,7 +371,12 @@ export const Pages = {
               userInterfaceStyle={"dark"}
               showsUserLocation={true}
               followsUserLocation={true}
-              showsMyLocationButton={true}>
+              showsMyLocationButton={true}
+              onUserLocationChange = {e => this.isFriendClose(e.nativeEvent.coordinate)}>
+              <Marker coordinate={this.state.location}
+              title={"Kenneth"}>
+
+              </Marker>
       
             </MapView>
           );
