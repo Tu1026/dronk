@@ -26,3 +26,20 @@ pipenv run manage.py runserver 0.0.0.0:<port of your choice>
 We used react-native for the front end user interface. The application is available on both ios and android.
 
 The backend we django-restful framework to host the apis. We used both a digital ocean virtual machine and rasberry pi to host our apis
+
+### Video Demos
+https://www.youtube.com/watch?v=ZXtcEl-eP98
+
+### Screen Demos
+![image](https://user-images.githubusercontent.com/64434778/149676765-ea0613cf-fbf7-467d-bd52-205c95b16969.png)
+![image](https://user-images.githubusercontent.com/64434778/149676777-5d790521-850e-4ac8-99a6-56b8464c8247.png)
+![image](https://user-images.githubusercontent.com/64434778/149676785-c3b6eb5b-cea3-43d2-a85b-457b7f3daf98.png)
+![image](https://user-images.githubusercontent.com/64434778/149676803-7da29fd5-c8b1-43ed-a97f-805f38cf57f1.png)
+![image](https://user-images.githubusercontent.com/64434778/149676805-170f7bab-1806-4efb-92d9-cb618b6db1fc.png)
+![image](https://user-images.githubusercontent.com/64434778/149676817-ac282899-2cce-442f-bf85-96e31b6ca871.png)
+![image](https://user-images.githubusercontent.com/64434778/149676820-592436d2-0772-48c9-89f8-4466602fcd67.png)
+![image](https://user-images.githubusercontent.com/64434778/149676830-8c3d94f8-c9bd-4d9d-8c8d-c0e93e67170b.png)
+
+
+
+
