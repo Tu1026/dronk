@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps'
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps'
 import { StyleSheet, Text, View, TextInput, FlatList, KeyboardAvoidingView, SafeAreaView, Image, Alert, ScrollView } from 'react-native'; // Removed Button
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -335,7 +335,39 @@ export const Pages = {
 
 
     MapPage: class MapPage extends React.Component {
+        state = {
+          active: true,
+          location: { 
+            latitude: 49.269657,
+            longitude: -123.250029,
+              // latitude: 49.26918850708335, //TODO CHANGE COORD
+              // longitude: -123.19003455340864,
+          }
+
+        }
+        isFriendClose(coordinate) {
+          console.log(coordinate)
+          const dlat = coordinate.latitude - this.state.location.latitude
+          const dlng = coordinate.longitude - this.state.location.longitude
+          console.log((dlat**2 + dlng**2)**0.5)
+          if ((dlat**2 + dlng**2)**0.5 > 0.001 && this.state.active) {
+            
+            Alert.alert(
+              "Far From Buddy",
+              "Don't forget to tell your friend where you are",
+              [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => this.state.active = false }
+              ]
+           );
+          }
+        }
         render() {
+          
           return (
             <MapView
               style={styles.map}
@@ -343,7 +375,12 @@ export const Pages = {
               userInterfaceStyle={"dark"}
               showsUserLocation={true}
               followsUserLocation={true}
-              showsMyLocationButton={true}>
+              showsMyLocationButton={true}
+              onUserLocationChange = {e => this.isFriendClose(e.nativeEvent.coordinate)}>
+              <Marker coordinate={this.state.location}
+              title={"Kenneth"}>
+
+              </Marker>
       
             </MapView>
           );
@@ -434,6 +471,12 @@ export const Pages = {
         //   super(props);
         //   this.state = { count: 0 };
         // }
+        state = {
+          groupMembers1: [{ key: 'Kenneth Xing' },
+          { key: 'Stripey Xing' },
+          { key: 'Lukas Franz' },
+          { key: 'Wilson Rabbit' },],
+        }
       
         generateCode = () => {
           // <View>
@@ -446,6 +489,14 @@ export const Pages = {
           //   count: this.state.count + 1
           //   <V
           // })
+        }
+        joinNewGroup = () => {
+          this.setState({
+            groupMembers1:
+              [{ key: 'Jonathan Chu' },
+              { key: 'Jeffrey Bezos' },],
+          })
+          console.log("Eneterd new group")
         }
       
         render() {
@@ -465,12 +516,7 @@ export const Pages = {
                 </View>
                 <View style={styles.listBorder}>
                   <FlatList
-                    data={[
-                      { key: 'Kenneth Xing' },
-                      { key: 'Stripey Xing' },
-                      { key: 'Lukas Franz' },
-                      { key: 'Wilson Rabbit' },
-                    ]}
+                    data={this.state.groupMembers1}
                     renderItem={({ item }) => <Text style={styles.groupList}>{item.key}</Text>}
                   />
                 </View>
@@ -488,7 +534,7 @@ export const Pages = {
                     <Button
                       title="Join a Group"
                       titleStyle={styles.buttonFont}
-                      onPress={() => sendGroupCode()}
+                      onPress={this.joinNewGroup}
                       buttonStyle={styles.joinGroupButton} />
                     <Button
                       title="Make a Group"

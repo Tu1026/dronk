@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import AppLoading from 'expo-app-loading';
-import GenerateRandomCode from 'react-random-code-generator';
+// import GenerateRandomCode from 'react-random-code-generator';
 import { Header } from '@react-navigation/stack';
 import {
   useFonts,
