@@ -4,8 +4,8 @@ from django.contrib.auth import get_user_model # If used custom user model
 UserModel = get_user_model()
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-
+class UserSerializer(serializers.ModelSerializer):
+    
     def create(self, validated_data):
         user = UserModel.objects.create_user(
             email=validated_data['email'],
