@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { Button } from 'react-native-elements/dist';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react';
@@ -52,6 +52,23 @@ const MapPage = () => (
 //   </View>
 // );
 
+class HomePage extends React.Component {
+
+  render() {
+    return (
+      <View style={styles.titlePage}>
+        <Image
+          style={styles.mainLogo}
+          source={require('./assets/icons8-party-100.png')} />
+        <Text style={styles.dronkTitle}> dronk. </Text>
+        <Text style={styles.keepingFunNights}>keeping fun nights  </Text>
+        <Text style={styles.worryFree} textAlign={'right'}> worry-free </Text>
+        <Text style={styles.useBottomNav}>Use the bottom navigation bar to get started</Text>
+      </View>
+    )
+  }
+}
+
 class CounterPage extends React.Component {
 
   state = {
@@ -102,16 +119,17 @@ export const BotBar = () => (
         tabBarShowLabel={false}
         screenOptions={{
           tabBarStyle: { backgroundColor: '#121212' },
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           // tabBarBackground: () => (
           //   <View style={styles.container}/>
           // ),
           headerShown: false,
         }}
       >
-        <Tab.Screen name="Data" component={CounterPage} />
-        <Tab.Screen name="Settings" component={SettingsPage} />
+        <Tab.Screen name="Home" component={HomePage} />
+        <Tab.Screen name="Drink Counter" component={CounterPage} />
         <Tab.Screen name="Map" component={MapPage} />
+        <Tab.Screen name="My Groups" component={SettingsPage} />
       </Tab.Navigator>
     </View>
   </NavigationContainer>
@@ -120,6 +138,7 @@ export const BotBar = () => (
 
 
 export default function App() {
+
   let [fontsLoaded] = useFonts({
     Barlow_400Regular,
     Barlow_400Regular_Italic,
@@ -151,6 +170,10 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     //justifyContent: 'center'
   },
+  mainLogo: {
+    width: 50,
+    height: 50,
+  },
   normalText: {
     color: '#ffffff',
     fontFamily: 'Barlow_400Regular',
@@ -165,6 +188,29 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     fontSize: 130,
     marginTop: 30
+  },
+  dronkTitle: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular',
+    fontSize: 70,
+    marginLeft: '30%'
+  },
+  keepingFunNights: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginTop: '11%',
+    marginLeft: '30%'
+  },
+  worryFree: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_700Bold_Italic',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 25,
+    marginLeft: '48%'
   },
   map: {
     flex: 1
@@ -182,5 +228,14 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     marginTop: 20
+  },
+  useBottomNav: {
+    color: '#ffffff',
+    fontFamily: 'Barlow_400Regular_Italic',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 15,
+    position: 'absolute',
+    bottom: '3.5%',
   }
 });
