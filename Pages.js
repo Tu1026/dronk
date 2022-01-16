@@ -420,7 +420,7 @@ export class Navigator extends React.Component {
             <Stack.Screen name="Not Logged In" component = {Pages.HomePage}/>
             <Stack.Screen name ="Sign Up" component={Pages.SignUpPage}/> 
             <Stack.Screen name="Sign In" component={Pages.SignInPage}/> 
-            <Stack.Screen name="Sign In Error" component={Pages.SignInErrorPage}/> 
+            <Stack.Screen name="Sign In Error" component={Pages.SignInErrorPage} options={{animationEnabled: false,}}/> 
             <Stack.Screen name="Signed In" component={BotBar} options={{headerShown: false}}/>
           </Stack.Navigator>
         </NavigationContainer>
